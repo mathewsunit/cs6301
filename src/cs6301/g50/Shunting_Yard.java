@@ -38,11 +38,7 @@ public class Shunting_Yard {
    Method to check if the operator is of the passed associative type.
  */
     private boolean isLeftAssociative(String token,int type){
-           if(operators.get(token)[1]==type){
-               return true;
-           }
-           else
-               return false;
+        return operators.get(token)[1] == type;
 
     }
 /*

@@ -232,9 +232,9 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
     
     private void toArray(Entry root, List<Entry> list) {
         if (root == null) return;
-        toArray((Entry) root.left, list);
+        toArray(root.left, list);
         list.add(root);
-        toArray((Entry) root.right, list);
+        toArray(root.right, list);
     }
 
     

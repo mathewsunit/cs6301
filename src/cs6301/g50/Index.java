@@ -2,7 +2,7 @@
 
 package cs6301.g50;
 public interface Index {
-    public void putIndex(int index);
-    public int getIndex();
+    void putIndex(int index);
+    int getIndex();
 }
 

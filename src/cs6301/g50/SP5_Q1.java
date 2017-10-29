@@ -54,7 +54,7 @@ public class SP5_Q1 {
          2) Partition 2 (Hoare'stack partition) : pass "true" in   q.quickSort(a,true);
         */
         // Shuffles the array before sorting.
-        s.shuffle(a);  // Comment this if need to test decreasing order of number
+        Shuffle.shuffle(a);  // Comment this if need to test decreasing order of number
         t.start();
         q.quickSort(a,true); // default "true" means partition 1
         t.end();

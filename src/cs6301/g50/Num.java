@@ -44,7 +44,7 @@ public class Num  implements Comparable<Num> {
 
 
     boolean hasNext(){
-        return next!=null?true:false;
+        return next != null;
     }
 
 
@@ -286,7 +286,7 @@ public class Num  implements Comparable<Num> {
         Num[] b_split = kSplit(copy(b));
         long length3 = a_split[2].getDecimalValue();
         long length1 = length3%2==0?(length3/2):(length3/2+1);
-        long length2 = length3/2;;
+        long length2 = length3/2;
 
         Num firstterm = productRecursive(a_split[0],b_split[0],length1);
         Num lastterm = productRecursive(a_split[1],b_split[1],length2);

@@ -44,7 +44,7 @@ public class SortAnalysis {
                         arr[j]=-j;
                     }
                     timer.start();
-                    m1.mergeSort(arr,tmp);
+                    GenericsMergeSort.mergeSort(arr,tmp);
                     timer.end();
                     System.out.println(i/size+" Million  "+ timer.elapsedTime + "msec ");
 
@@ -64,7 +64,7 @@ public class SortAnalysis {
                         arr[j]=-j;
                     }
                     timer.start();
-                    m2.mergeSort(arr,tmp);
+                    MergeSort.mergeSort(arr,tmp);
                     timer.end();
                     System.out.println(i/size+" Million  "+ timer.elapsedTime + "msec ");
 

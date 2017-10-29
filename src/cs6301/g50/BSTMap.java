@@ -24,7 +24,7 @@ public class BSTMap<K extends Comparable<? super K>,V> implements Iterable<K> {
 		public int compareTo(Pair pair) {
 			return key.compareTo(pair.key);
 		}
-	};
+	}
 
     RedBlackTree<Pair> rbt;
 

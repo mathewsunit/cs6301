@@ -50,7 +50,7 @@ public class BinarySearch<T extends Comparable<? super T>> {
         System.out.println(nums);
 
         Integer[] numsArray = nums.toArray(new Integer[nums.size()]);
-        int index = bs.binarySearch(numsArray, numToSearch);
+        int index = binarySearch(numsArray, numToSearch);
         System.out.println("\nIndex of largest element less than or equal to "+numToSearch+": ( Returns -1 if lowest element in array " +
                 "is greater than x )");
         System.out.println(index);
