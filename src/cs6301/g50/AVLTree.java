@@ -260,7 +260,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
         System.out.println("Done");
     }
 
-    private void printBalanceFactors() {
+    public void printBalanceFactors() {
         printBalanceFactors(root);
     }
 

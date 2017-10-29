@@ -138,7 +138,5 @@ public class SplayTree<T extends Comparable<? super T>> extends BST<T> {
             t.remove(i-3);
             t.contains(i-20);
         }
-        
     }
-       
 }

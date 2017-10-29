@@ -274,8 +274,6 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             }
         }
     }
-
-    
     
     /**BST Verification
      *@params T - the root or the node from where test to be done.
@@ -289,5 +287,16 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             return isBst(t.right);
         }
         return true;
+    }
+
+    public static void main(String args[]){
+        BST<Integer> bst = new BST();
+
+        for(int i=0;i<1280;i++){
+            bst.add(Integer.valueOf(i));
+            bst.remove(Integer.valueOf(i));
+        }
+
+        int a = 1;
     }
 }

@@ -12,21 +12,21 @@
 package cs6301.g50;
 import java.util.Random;
 
-public class SP7Q4Driver {
+public class SP7_Q4Driver {
 
     public static void main( String [ ] args )
     {
-        Long bst = testTree(new double[]{0.25, 0.25, 0.10, 0.25}, new BST());
+        Long bst = testTree(new double[]{0.25, 0.35, 0.25}, new BST());
         System.out.println(bst);
-        Long spt = testTree(new double[]{0.25, 0.25, 0.10, 0.25}, new SplayTree());
+        Long spt = testTree(new double[]{0.25, 0.35, 0.25}, new SplayTree());
         System.out.println(spt);
     }
 
     public static long testTree(double[] probArray, BST t){
-        final int NUMS = 10000000;
+        final int NUMS = 15000000;
         Timer timer = new Timer();
 
-        System.out.println( "BST Test has begun" );
+        System.out.println( "Test has begun" );
         timer.start();
 
         for( int i = 1; i != NUMS; i++)
@@ -44,8 +44,6 @@ public class SP7Q4Driver {
                 t.remove( tval );
             }
         }
-
-        int k = t.size();
 
         timer.end();
         return timer.elapsedTime;
