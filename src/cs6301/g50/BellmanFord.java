@@ -66,6 +66,21 @@ public class BellmanFord {
         }
     }
 
+    public void findSP(int maxCost){
+        //Algorithm
+        queue.addLast(source);
+        while (!queue.isEmpty()&&cost<=maxCost){
+            if(cost==graph.size()){
+                cycle = true;
+                return;
+            }
+            Graph.Vertex v = queue.removeFirst();
+            present[v.getName()] = true;
+            relax(v);
+            cost++;
+        }
+    }
+
     public void relax(Graph.Vertex v){
         for(Graph.Edge e:v.adj){
             Graph.Vertex d = e.otherEnd(v);
