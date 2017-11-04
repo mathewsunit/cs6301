@@ -9,19 +9,21 @@ public class BellmanFord {
     private Integer[] dist;
     private Deque<Graph.Edge>[] lastEdge;
     private Deque<Graph.Vertex> queue;
+    private Deque<Graph.Vertex> nqueue;
     private int cost;
     private boolean[] present;
     private boolean cycle;
+    private boolean nochange;
 
     private int compareTo(Integer n1, Integer n2){
         if(n1==null&&n2==null){
             return 0;
         }
         if(n1==null){
-            return -1;
+            return 1;
         }
         if(n2==null){
-            return 1;
+            return -1;
         }
         return n1.compareTo(n2);
     }
@@ -47,8 +49,10 @@ public class BellmanFord {
         lastEdge = new Deque[graph.size()];
         dist[s.getName()] = 0;
         queue = new LinkedList<>();
+        nqueue = new LinkedList<>();
         present = new boolean[graph.size()];
         cycle = false;
+        nochange = false;
     }
 
     public void findSP(Integer maxCost){
@@ -56,13 +60,18 @@ public class BellmanFord {
             maxCost = graph.size();
         }
         queue.addLast(source);
-        while (!queue.isEmpty()&&cost<=maxCost){
+        while (!queue.isEmpty()&&cost<=maxCost&&!nochange){
             if(cost==graph.size()){
                 cycle = true;
                 return;
             }
-            Graph.Vertex v = queue.removeFirst();
-            relax(v);
+            nochange = true;
+            while (!queue.isEmpty()&&cost<=maxCost){
+                Graph.Vertex v = queue.removeFirst();
+                relax(v);
+            }
+            queue = nqueue;
+            nqueue = new LinkedList<>();
             cost++;
         }
     }
@@ -71,15 +80,16 @@ public class BellmanFord {
         present[v.getName()] = false;
         for(Graph.Edge e:v.adj){
             Graph.Vertex d = e.otherEnd(v);
-            if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==-1){
+            if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==1){
                 dist[d.getName()] = add(dist[v.getName()],e.getWeight());
                 Deque<Graph.Edge> ndeque = new LinkedList<>();
                 ndeque.addLast(e);
                 lastEdge[d.getName()] = ndeque;
                 if(!present[d.getName()]){
-                    queue.addLast(d);
+                    nqueue.addLast(d);
                     present[d.getName()] = true;
                 }
+                nochange = false;
             }else if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==0){
                 Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
                 if(ndeque == null){
@@ -88,7 +98,7 @@ public class BellmanFord {
                 }
                 ndeque.addLast(e);
                 if(!present[d.getName()]){
-                    queue.addLast(d);
+                    nqueue.addLast(d);
                     present[d.getName()] = true;
                 }
             }
