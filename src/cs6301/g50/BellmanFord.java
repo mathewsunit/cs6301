@@ -68,40 +68,36 @@ public class BellmanFord {
             nochange = true;
             while (!queue.isEmpty()&&cost<=maxCost){
                 Graph.Vertex v = queue.removeFirst();
-                relax(v);
+                present[v.getName()] = false;
+                for(Graph.Edge e:v.adj){
+                    Graph.Vertex d = e.otherEnd(v);
+                    if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==1){
+                        dist[d.getName()] = add(dist[v.getName()],e.getWeight());
+                        Deque<Graph.Edge> ndeque = new LinkedList<>();
+                        ndeque.addLast(e);
+                        lastEdge[d.getName()] = ndeque;
+                        if(!present[d.getName()]){
+                            nqueue.addLast(d);
+                            present[d.getName()] = true;
+                        }
+                        nochange = false;
+                    }else if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==0){
+                        Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
+                        if(ndeque == null){
+                            ndeque = new LinkedList<>();
+                            lastEdge[d.getName()] = ndeque;
+                        }
+                        ndeque.addLast(e);
+                        if(!present[d.getName()]){
+                            nqueue.addLast(d);
+                            present[d.getName()] = true;
+                        }
+                    }
+                }
             }
             queue = nqueue;
             nqueue = new LinkedList<>();
             cost++;
-        }
-    }
-
-    public void relax(Graph.Vertex v){
-        present[v.getName()] = false;
-        for(Graph.Edge e:v.adj){
-            Graph.Vertex d = e.otherEnd(v);
-            if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==1){
-                dist[d.getName()] = add(dist[v.getName()],e.getWeight());
-                Deque<Graph.Edge> ndeque = new LinkedList<>();
-                ndeque.addLast(e);
-                lastEdge[d.getName()] = ndeque;
-                if(!present[d.getName()]){
-                    nqueue.addLast(d);
-                    present[d.getName()] = true;
-                }
-                nochange = false;
-            }else if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==0){
-                Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
-                if(ndeque == null){
-                    ndeque = new LinkedList<>();
-                    lastEdge[d.getName()] = ndeque;
-                }
-                ndeque.addLast(e);
-                if(!present[d.getName()]){
-                    nqueue.addLast(d);
-                    present[d.getName()] = true;
-                }
-            }
         }
     }
 }
