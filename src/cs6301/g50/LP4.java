@@ -26,7 +26,7 @@ public class LP4 {
     public long countTopologicalOrders() {
         // To do
         BellmanFord bf = new BellmanFord(g,s);
-        bf.findSP();
+        bf.findSP(null);
         return 0;
     }
 

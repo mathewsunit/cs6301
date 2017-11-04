@@ -51,23 +51,10 @@ public class BellmanFord {
         cycle = false;
     }
 
-    public void findSP(){
-        //Algorithm
-        queue.addLast(source);
-        while (!queue.isEmpty()){
-            if(cost==graph.size()){
-                cycle = true;
-                return;
-            }
-            Graph.Vertex v = queue.removeFirst();
-            present[v.getName()] = true;
-            relax(v);
-            cost++;
+    public void findSP(Integer maxCost){
+        if(maxCost==null){
+            maxCost = graph.size();
         }
-    }
-
-    public void findSP(int maxCost){
-        //Algorithm
         queue.addLast(source);
         while (!queue.isEmpty()&&cost<=maxCost){
             if(cost==graph.size()){
@@ -75,13 +62,13 @@ public class BellmanFord {
                 return;
             }
             Graph.Vertex v = queue.removeFirst();
-            present[v.getName()] = true;
             relax(v);
             cost++;
         }
     }
 
     public void relax(Graph.Vertex v){
+        present[v.getName()] = false;
         for(Graph.Edge e:v.adj){
             Graph.Vertex d = e.otherEnd(v);
             if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==-1){
