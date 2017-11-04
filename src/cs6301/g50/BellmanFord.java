@@ -9,7 +9,6 @@ public class BellmanFord {
     private Integer[] dist;
     private Deque<Graph.Edge>[] lastEdge;
     private Deque<Graph.Vertex> queue;
-    private Deque<Graph.Vertex> nqueue;
     private int cost;
     private boolean[] present;
     private boolean cycle;
@@ -49,7 +48,6 @@ public class BellmanFord {
         lastEdge = new Deque[graph.size()];
         dist[s.getName()] = 0;
         queue = new LinkedList<>();
-        nqueue = new LinkedList<>();
         present = new boolean[graph.size()];
         cycle = false;
         nochange = false;
@@ -66,8 +64,10 @@ public class BellmanFord {
                 return;
             }
             nochange = true;
+            queue.addLast(null);
             while (!queue.isEmpty()&&cost<=maxCost){
                 Graph.Vertex v = queue.removeFirst();
+                if(null==v)break;
                 present[v.getName()] = false;
                 for(Graph.Edge e:v.adj){
                     Graph.Vertex d = e.otherEnd(v);
@@ -77,7 +77,7 @@ public class BellmanFord {
                         ndeque.addLast(e);
                         lastEdge[d.getName()] = ndeque;
                         if(!present[d.getName()]){
-                            nqueue.addLast(d);
+                            queue.addLast(d);
                             present[d.getName()] = true;
                         }
                         nochange = false;
@@ -89,14 +89,12 @@ public class BellmanFord {
                         }
                         ndeque.addLast(e);
                         if(!present[d.getName()]){
-                            nqueue.addLast(d);
+                            queue.addLast(d);
                             present[d.getName()] = true;
                         }
                     }
                 }
             }
-            queue = nqueue;
-            nqueue = new LinkedList<>();
             cost++;
         }
     }
