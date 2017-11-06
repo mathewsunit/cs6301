@@ -26,11 +26,11 @@ public class BSTMap<K extends Comparable<? super K>,V> implements Iterable<K> {
 		}
 	}
 
-    RedBlackTree<Pair> rbt;
+    SplayTree<Pair> rbt;
 
     /* Constructor of the class */
     BSTMap() {
-    	rbt = new RedBlackTree<>();
+    	rbt = new SplayTree<>();
     }
 
 
