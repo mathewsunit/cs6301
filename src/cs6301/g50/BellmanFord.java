@@ -53,19 +53,53 @@ public class BellmanFord {
         nochange = false;
     }
 
-    public void findSP(Integer maxCost){
-        if(maxCost==null){
-            maxCost = graph.size();
-        }
+    public void findSP(){
         queue.addLast(source);
-        while (!queue.isEmpty()&&cost<=maxCost&&!nochange){
+        while (!queue.isEmpty()){
+            if(cost>=graph.size()){
+                cycle = true;
+                return;
+            }
+            Graph.Vertex v = queue.removeFirst();
+            present[v.getName()] = false;
+            for(Graph.Edge e:v.adj){
+                Graph.Vertex d = e.otherEnd(v);
+                if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==1){
+                    dist[d.getName()] = add(dist[v.getName()],e.getWeight());
+                    Deque<Graph.Edge> ndeque = new LinkedList<>();
+                    ndeque.addLast(e);
+                    lastEdge[d.getName()] = ndeque;
+                    if(!present[d.getName()]){
+                        queue.addLast(d);
+                        present[d.getName()] = true;
+                    }
+                }else if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==0){
+                    Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
+                    if(ndeque == null){
+                        ndeque = new LinkedList<>();
+                        lastEdge[d.getName()] = ndeque;
+                    }
+                    ndeque.addLast(e);
+                    if(!present[d.getName()]){
+                        queue.addLast(d);
+                        present[d.getName()] = true;
+                    }
+                }
+            }
+            cost++;
+        }
+    }
+
+    public void findSP(Integer maxCost){
+        queue.addLast(source);
+        while (!queue.isEmpty()&&cost<maxCost&&!nochange){
             if(cost==graph.size()){
                 cycle = true;
                 return;
             }
             nochange = true;
             queue.addLast(null);
-            while (!queue.isEmpty()&&cost<=maxCost){
+            while (!queue.isEmpty()){
                 Graph.Vertex v = queue.removeFirst();
                 if(null==v)break;
                 present[v.getName()] = false;
@@ -81,21 +115,63 @@ public class BellmanFord {
                             present[d.getName()] = true;
                         }
                         nochange = false;
-                    }else if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==0){
-                        Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
-                        if(ndeque == null){
-                            ndeque = new LinkedList<>();
-                            lastEdge[d.getName()] = ndeque;
-                        }
-                        ndeque.addLast(e);
-                        if(!present[d.getName()]){
-                            queue.addLast(d);
-                            present[d.getName()] = true;
-                        }
                     }
                 }
             }
             cost++;
         }
+    }
+
+    public int countPaths(Graph.Vertex v){
+        if(v==source){
+            return 1;
+        }
+        int count = 0;
+        Deque<Graph.Edge> ndeque =lastEdge[v.getName()];
+        for(Graph.Edge e:ndeque){
+            count = count + countPaths(e.otherEnd(v));
+        }
+        return count;
+    }
+
+    public void printPaths(Graph.Vertex target){
+        if(cycle) return;
+        Deque<Graph.Vertex> deque = new LinkedList<>();
+        printPaths(target, deque);
+    }
+
+    public void printPaths(Graph.Vertex v, Deque<Graph.Vertex> deque){
+        deque.addFirst(v);
+        if(v==source){
+            for(Graph.Vertex vertex:deque){
+                System.out.print(vertex.toString());
+                System.out.print(" ");
+            }
+            System.out.println();
+            deque.removeFirst();
+            return;
+        }
+        Deque<Graph.Edge> ndeque =lastEdge[v.getName()];
+        for(Graph.Edge e:ndeque){
+            printPaths(e.otherEnd(v),deque);
+        }
+        deque.removeFirst();
+    }
+
+    public boolean isCycle(){
+        return cycle;
+    }
+
+    public boolean hasPath(Graph.Vertex v){
+        if(null==lastEdge[v.getName()]){
+            return false;
+        }
+        return true;
+    }
+
+    public int getWeight(Graph.Vertex v){
+        if(v == source) return 0;
+        Graph.Edge e = lastEdge[v.getName()].getFirst();
+        return e.getWeight() + getWeight(e.otherEnd(v));
     }
 }

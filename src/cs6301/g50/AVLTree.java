@@ -272,5 +272,4 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
         printBalanceFactors((Entry) root.right);
 
     }
-
 }

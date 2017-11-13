@@ -296,7 +296,5 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             bst.add(Integer.valueOf(i));
             bst.remove(Integer.valueOf(i));
         }
-
-        int a = 1;
     }
 }

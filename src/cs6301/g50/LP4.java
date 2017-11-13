@@ -25,8 +25,6 @@ public class LP4 {
     // Part a. Return number of topological orders of g
     public long countTopologicalOrders() {
         // To do
-        BellmanFord bf = new BellmanFord(g,s);
-        bf.findSP(null);
         return 0;
     }
 
@@ -43,7 +41,11 @@ public class LP4 {
     // 	Return -1 if the graph has a negative or zero cycle
     public long countShortestPaths(Vertex t) {
         // To do
-        return 0;
+        BellmanFord bf = new BellmanFord(g,s);
+        bf.findSP();
+        if(bf.isCycle()) return 0;
+        if(!bf.hasPath(t)) return 0;
+        return bf.countPaths(t);
     }
 
 
@@ -52,14 +54,25 @@ public class LP4 {
     //	Return -1 if the graph has a negative or zero cycle.
     public long enumerateShortestPaths(Vertex t) {
         // To do
-        return 0;
+        BellmanFord bf = new BellmanFord(g,s);
+        bf.findSP();
+        if(bf.isCycle()) return -1;
+        if(!bf.hasPath(t)) return -1;
+        bf.printPaths(t);
+        return 1;
     }
 
 
     // Part e. Return weight of shortest path from s to t using at most k edges
     public int constrainedShortestPath(Vertex t, int k) {
         // To do
-        return 0;
+        BellmanFord bf = new BellmanFord(g,s);
+        bf.findSP(k);
+        if(!bf.hasPath(t)){
+            System.out.println("No Path with this constraint");
+            return -1;
+        }
+        return bf.getWeight(t);
     }
 
 
