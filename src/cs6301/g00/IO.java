@@ -5,9 +5,10 @@
 
 
 package cs6301.g00;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class IO {
     // Use file name from command line arg (if given). Otherwise read from stdin (console)

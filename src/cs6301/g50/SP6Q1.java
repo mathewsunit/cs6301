@@ -10,7 +10,10 @@
 
 package cs6301.g50;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
 
 public class SP6Q1{
 

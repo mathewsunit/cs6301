@@ -3,10 +3,9 @@
 
 package cs6301.g50;
 
-import java.util.Scanner;
-import java.lang.Comparable;
-import java.io.FileNotFoundException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class KruskalMST {
     public KruskalMST(Graph g) {

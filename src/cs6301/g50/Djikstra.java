@@ -1,5 +1,7 @@
 package cs6301.g50;
+
 import cs6301.g00.Graph;
+
 import java.util.*;
 
 /*
@@ -102,10 +104,7 @@ public class Djikstra {
     }
 
     public boolean hasPath(Graph.Vertex v){
-        if(null==lastEdge[v.getName()]){
-            return false;
-        }
-        return true;
+        return null != lastEdge[v.getName()];
     }
 
     public int getReward(Graph.Vertex target){

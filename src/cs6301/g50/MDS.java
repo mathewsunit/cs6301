@@ -3,9 +3,10 @@ package cs6301.g50;
 
 public class MDS {
 
-
+    MultiDimensionalSearch multiDimensionalSearch;
 
     public MDS() {
+        multiDimensionalSearch = new MultiDimensionalSearch();
     }
 
     /* add a new item.  If an entry with the same id already exists,
@@ -13,7 +14,7 @@ public class MDS {
        the item.  Returns true if the item is new, and false otherwise.
     */
     public boolean add(Long id, Long[ ] description) {
-        return true;
+        return multiDimensionalSearch.addNewItem(id, description);
     }
 
     /* add a new supplier (Long) and their reputation (float in
@@ -22,7 +23,7 @@ public class MDS {
        supplier is new, and false otherwise.
     */
     public boolean add(Long supplier, float reputation) {
-        return true;
+        return multiDimensionalSearch.addNewSupplier(supplier, reputation);
     }
 
     /* add products and their prices at which the supplier sells the
@@ -31,14 +32,14 @@ public class MDS {
       Returns the number of new entries created.
     */
     public int add(Long supplier, Pair[ ] idPrice) {
-        return 0;
+        return multiDimensionalSearch.addSupplierInventory(supplier, idPrice);
     }
 
     /* return an array with the description of id.  Return null if
       there is no item with this id.
     */
     public Long[ ] description(Long id) {
-        return null;
+        return multiDimensionalSearch.description(id);
     }
 
     /* given an array of Longs, return an array of items whose
@@ -47,7 +48,7 @@ public class MDS {
       description (non-increasing order).
     */
     public Long[ ] findItem(Long[ ] arr) {
-        return null;
+        return multiDimensionalSearch.findItem(arr);
     }
 
     /* given a Long n, return an array of items whose description
@@ -59,14 +60,14 @@ public class MDS {
       (non-decreasing order).
     */
     public Long[ ] findItem(Long n, int minPrice, int maxPrice, float minReputation) {
-        return null;
+        return multiDimensionalSearch.findItem(n, minPrice, maxPrice, minReputation);
     }
 
     /* given an id, return an array of suppliers who sell that item,
       ordered by the price at which they sell the item (non-decreasing order).
     */
     public Long[ ] findSupplier(Long id) {
-        return null;
+        return multiDimensionalSearch.findSupplier(id);
     }
 
     /* given an id and a minimum reputation, return an array of
@@ -75,7 +76,7 @@ public class MDS {
       at which they sell the item (non-decreasing order).
     */
     public Long[ ] findSupplier(Long id, float minReputation) {
-        return null;
+        return multiDimensionalSearch.findSupplier(id, minReputation);
     }
 
     /* find suppliers selling 5 or more products, who have the same
@@ -96,8 +97,8 @@ public class MDS {
        sellers meeting or exceeding the given minimum reputation.
        Each item can be purchased from a different seller.
     */
-    public int invoice(Long[ ] arr, float minReputation) {
-        return 0;
+    public int invoice(Long[] arr, float minReputation) {
+        return multiDimensionalSearch.invoice(arr, minReputation);
     }
 
     /* remove all items, all of whose suppliers have a reputation that
@@ -105,7 +106,7 @@ public class MDS {
        an array with the items removed.
     */
     public Long[ ] purge(float maxReputation) {
-        return null;
+        return multiDimensionalSearch.purge(maxReputation);
     }
 
     /* remove item from storage.  Returns the sum of the Longs that
@@ -113,7 +114,7 @@ public class MDS {
        did not exist).
     */
     public Long remove(Long id) {
-        return 0L;
+        return multiDimensionalSearch.remove(id);
     }
 
     /* remove from the given id's description those elements that are
@@ -122,7 +123,7 @@ public class MDS {
        number of elements that were actually removed from the description.
     */
     public int remove(Long id, Long[ ] arr) {
-        return 0;
+        return multiDimensionalSearch.removeItemDesc(id, arr);
     }
 
     /* remove the elements of the array from the description of all
@@ -130,7 +131,7 @@ public class MDS {
        from their descriptions.
     */
     public int removeAll(Long[ ] arr) {
-        return 0;
+        return multiDimensionalSearch.removeAll(arr);
     }
 
     public static class Pair {

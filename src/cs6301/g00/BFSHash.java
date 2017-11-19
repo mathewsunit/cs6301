@@ -5,11 +5,10 @@
 
 package cs6301.g00;
 
-import cs6301.g00.Graph.Vertex;
+import cs6301.g00.BFSHash.BFSVertex;
 import cs6301.g00.Graph.Edge;
-import cs6301.g00.BFSHash.*;
+import cs6301.g00.Graph.Vertex;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;

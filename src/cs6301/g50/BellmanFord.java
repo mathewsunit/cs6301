@@ -1,7 +1,9 @@
 package cs6301.g50;
 
-import java.util.*;
 import cs6301.g00.Graph;
+
+import java.util.Deque;
+import java.util.LinkedList;
 
 /*
  * Created by
@@ -183,10 +185,7 @@ public class BellmanFord {
 
     // Function that checks if there is a path post findSP()
     public boolean hasPath(Graph.Vertex v){
-        if(null==lastEdge[v.getName()]){
-            return false;
-        }
-        return true;
+        return null != lastEdge[v.getName()];
     }
 
     // Recursive funciton to return weight of edges

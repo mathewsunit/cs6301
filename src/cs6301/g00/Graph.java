@@ -169,8 +169,8 @@ public class Graph implements Iterable<Graph.Vertex> {
 
 	/** Set weight of edge */
 	public void setWeight(int newWeight) {
-	    weight = newWeight;;
-	}
+        weight = newWeight;
+    }
 
 	/** Get name of edge */
 	public int getName() {
