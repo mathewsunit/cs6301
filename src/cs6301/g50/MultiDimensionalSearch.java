@@ -2,10 +2,13 @@ package cs6301.g50;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class MultiDimensionalSearch {
+
+    class Test{
+        int test1;
+    }
 
     class Item{
         long uid;
