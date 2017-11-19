@@ -3,6 +3,17 @@ package cs6301.g50;
 import java.util.*;
 import cs6301.g00.Graph;
 
+/*
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ *
+ */
+
 public class BellmanFord {
     private Graph graph;
     private Graph.Vertex source;
@@ -14,6 +25,7 @@ public class BellmanFord {
     private boolean cycle;
     private boolean nochange;
 
+    // Private function that does a comparison if either one of the number is INF, here treated as null
     private int compareTo(Integer n1, Integer n2){
         if(n1==null&&n2==null){
             return 0;
@@ -27,7 +39,7 @@ public class BellmanFord {
         return n1.compareTo(n2);
     }
 
-
+    // Private function that can be used to add a value if the other is INF
     private Integer add(Integer n1, Integer n2){
         if(n1==null&&n2==null){
             return null;
@@ -41,6 +53,7 @@ public class BellmanFord {
         return n1+n2;
     }
 
+    // Constructor for the Bellman Ford algo
     public BellmanFord(Graph g, Graph.Vertex s){
         graph = g;
         source = s;
@@ -53,6 +66,7 @@ public class BellmanFord {
         nochange = false;
     }
 
+    // Function that implements a shortest path search
     public void findSP(){
         queue.addLast(source);
         while (!queue.isEmpty()){
@@ -90,6 +104,7 @@ public class BellmanFord {
         }
     }
 
+    // Function that does a constrained shortest path check
     public void findSP(Integer maxCost){
         queue.addLast(source);
         while (!queue.isEmpty()&&cost<maxCost&&!nochange){
@@ -122,6 +137,7 @@ public class BellmanFord {
         }
     }
 
+    // Function that counts the paths
     public int countPaths(Graph.Vertex v){
         if(v==source){
             return 1;
@@ -134,13 +150,15 @@ public class BellmanFord {
         return count;
     }
 
+    // Function that prints the path
     public void printPaths(Graph.Vertex target){
         if(cycle) return;
         Deque<Graph.Vertex> deque = new LinkedList<>();
         printPaths(target, deque);
     }
 
-    public void printPaths(Graph.Vertex v, Deque<Graph.Vertex> deque){
+    // Recursive function to print the paths
+    private void printPaths(Graph.Vertex v, Deque<Graph.Vertex> deque){
         deque.addFirst(v);
         if(v==source){
             for(Graph.Vertex vertex:deque){
@@ -158,10 +176,12 @@ public class BellmanFord {
         deque.removeFirst();
     }
 
+    // Function that returns whethe this is cycle
     public boolean isCycle(){
         return cycle;
     }
 
+    // Function that checks if there is a path post findSP()
     public boolean hasPath(Graph.Vertex v){
         if(null==lastEdge[v.getName()]){
             return false;
@@ -169,6 +189,7 @@ public class BellmanFord {
         return true;
     }
 
+    // Recursive funciton to return weight of edges
     public int getWeight(Graph.Vertex v){
         if(v == source) return 0;
         Graph.Edge e = lastEdge[v.getName()].getFirst();
