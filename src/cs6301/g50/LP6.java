@@ -10,9 +10,14 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/*
+ * Created by
+ * Professor
+ *
+ */
 
 public class LP6 {
-    static int VERBOSE = 1;
+    static int VERBOSE = 0;
     static int limit = 0;
     static HashMap<Integer, Container> cmap = new HashMap<>();
 
