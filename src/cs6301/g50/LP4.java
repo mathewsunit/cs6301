@@ -73,7 +73,7 @@ public class LP4 {
             System.out.println("No Path with this constraint");
             return -1;
         }
-        return bf.getWeight(t);
+        return 0;
     }
 
 

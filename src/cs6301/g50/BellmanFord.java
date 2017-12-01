@@ -26,6 +26,7 @@ public class BellmanFord {
     private boolean[] present;
     private boolean cycle;
     private boolean nochange;
+    private Long[] vertexmem;
 
     // Private function that does a comparison if either one of the number is INF, here treated as null
     private int compareTo(Integer n1, Integer n2){
@@ -64,6 +65,7 @@ public class BellmanFord {
         dist[s.getName()] = 0;
         queue = new LinkedList<>();
         present = new boolean[graph.size()];
+        vertexmem = new Long[graph.size()];
         cycle = false;
         nochange = false;
     }
@@ -71,38 +73,45 @@ public class BellmanFord {
     // Function that implements a shortest path search
     public void findSP(){
         queue.addLast(source);
+        queue.addLast(null);
         while (!queue.isEmpty()){
             if(cost>=graph.size()){
                 cycle = true;
                 return;
             }
-            Graph.Vertex v = queue.removeFirst();
-            present[v.getName()] = false;
-            for(Graph.Edge e:v.adj){
-                Graph.Vertex d = e.otherEnd(v);
-                if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==1){
-                    dist[d.getName()] = add(dist[v.getName()],e.getWeight());
-                    Deque<Graph.Edge> ndeque = new LinkedList<>();
-                    ndeque.addLast(e);
-                    lastEdge[d.getName()] = ndeque;
-                    if(!present[d.getName()]){
-                        queue.addLast(d);
-                        present[d.getName()] = true;
-                    }
-                }else if(compareTo(dist[d.getName()],add(dist[v.getName()],e.getWeight()))==0){
-                    Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
-                    if(ndeque == null){
-                        ndeque = new LinkedList<>();
+            while (!queue.isEmpty()) {
+                Graph.Vertex v = queue.removeFirst();
+                if (null == v) break;
+                present[v.getName()] = false;
+                for (Graph.Edge e : v.adj) {
+                    Graph.Vertex d = e.otherEnd(v);
+                    if (compareTo(dist[d.getName()], add(dist[v.getName()], e.getWeight())) == 1) {
+                        dist[d.getName()] = add(dist[v.getName()], e.getWeight());
+                        Deque<Graph.Edge> ndeque = new LinkedList<>();
+                        ndeque.addLast(e);
                         lastEdge[d.getName()] = ndeque;
-                    }
-                    ndeque.addLast(e);
-                    if(!present[d.getName()]){
-                        queue.addLast(d);
-                        present[d.getName()] = true;
+                        if (!present[d.getName()]) {
+                            queue.addLast(d);
+                            present[d.getName()] = true;
+                        }
+                    } else if (compareTo(dist[d.getName()], add(dist[v.getName()], e.getWeight())) == 0) {
+                        Deque<Graph.Edge> ndeque = lastEdge[d.getName()];
+                        if (ndeque == null) {
+                            ndeque = new LinkedList<>();
+                            lastEdge[d.getName()] = ndeque;
+                        }
+                        if (!ndeque.contains(e)) ndeque.addLast(e);
+                        if (!present[d.getName()]) {
+                            queue.addLast(d);
+                            present[d.getName()] = true;
+                        }
                     }
                 }
             }
             cost++;
+            if (!queue.isEmpty()) {
+                queue.addLast(null);
+            }
         }
     }
 
@@ -140,15 +149,25 @@ public class BellmanFord {
     }
 
     // Function that counts the paths
-    public int countPaths(Graph.Vertex v){
-        if(v==source){
+    public long countPaths(Graph.Vertex v) {
+        vertexmem = new Long[graph.size()];
+        return countPathsRec(v);
+    }
+
+    // Function that counts the paths
+    public long countPathsRec(Graph.Vertex v) {
+        if (v == source) {
             return 1;
         }
-        int count = 0;
-        Deque<Graph.Edge> ndeque =lastEdge[v.getName()];
-        for(Graph.Edge e:ndeque){
-            count = count + countPaths(e.otherEnd(v));
+        if (null != vertexmem[v.getName()]) {
+            return vertexmem[v.getName()];
         }
+        long count = 0;
+        Deque<Graph.Edge> ndeque = lastEdge[v.getName()];
+        for (Graph.Edge e : ndeque) {
+            count = count + countPathsRec(e.otherEnd(v));
+        }
+        vertexmem[v.getName()] = count;
         return count;
     }
 
