@@ -51,8 +51,7 @@ public class MinCostFlow {
         System.out.println(sink);
         System.out.println(capacity);
         System.out.println(cost);
-        //Flow f = new Flow();
-        //this.excess=f.excessFlows;
+      
 
 
     }
